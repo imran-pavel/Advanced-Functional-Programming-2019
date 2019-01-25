@@ -1,1 +1,1 @@
-Advanced-Functional-Programming-2019
+Exercise tasks of one of the courses of University of Tampere
