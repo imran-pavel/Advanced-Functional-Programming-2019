@@ -1,4 +1,5 @@
 {-|
+The book example takes commands as command line parameters. I hope this is what was meant by "interactive program".
 
 First create two text files: "tree.txt" and "output.txt"
 
@@ -88,26 +89,6 @@ dispatch (command:xs) tree
                                         removeFile "output.txt"
                                         renameFile tempName "output.txt"
         | otherwise = error "Invalid Command Given ---> Error From dispatch"
-
-
-
-execute :: [String] -> Tree Int Int -> IO()        
-execute ("insert":xs) myTree = do
-                                let k = head xs
-                                let v = head (tail xs)
-                                (tempName, tempHandle) <- openTempFile "." "temp"
-                                hPutStr tempHandle (show (insert (read k :: Int) (read v :: Int) myTree))   -- Change return types of read here
-                                hClose tempHandle
-                                removeFile "myTree.txt"
-                                renameFile tempName "myTree.txt"
-execute ("search":xs) myTree = do
-                                        let (strKey : []) = xs
-                                        (tempName, tempHandle) <- openTempFile "." "temp"
-                                        hPutStr tempHandle (show (search (read strKey :: Int) myTree))        -- Change return types of read here
-                                        hClose tempHandle
-                                        removeFile "output.txt"
-                                        renameFile tempName "output.txt"
-execute _ _ = error "ERROR"
 
 
 
