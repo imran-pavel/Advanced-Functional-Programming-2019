@@ -1,0 +1,1 @@
+Node 20 [4,1,2,3] (Node 10 [2,2,2] (Node 1 [1,10] Empty Empty) (Node 15 [8,9] (Node 13 [39] Empty Empty) (Node 17 [4,34] Empty Empty))) (Node 30 [4] Empty Empty)
