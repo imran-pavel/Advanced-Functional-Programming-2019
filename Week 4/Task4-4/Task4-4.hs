@@ -10,7 +10,7 @@ Node 20 [1,2,3] (Node 10 [2,2,2] (Node 1 [1, 10] Empty Empty) (Node 15 [8,9] Emp
 
 
 Assuming you'll call using a tree that has integer value as key and integer array as value. If you want to call with a Tree that
-has some other type as key and value, you'll need to change the types of Tree/read in lines 74, 79, 86, 97 and then write down your tree in "tree.txt" file.
+has some other type as key and value, you'll need to change the types of Tree/read in lines 75, 80, 87, 98 and then write down your tree in "tree.txt" file.
 
 After downloading the file run this first (keep the .hs and the 2 .txt files in the same directory): ghc --make Task4-4.hs
 then run like any of the following examples to search or insert (I'm running it on windows):
