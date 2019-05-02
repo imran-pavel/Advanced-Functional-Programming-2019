@@ -1,6 +1,6 @@
 import System.Environment
 import qualified Data.List as DL
-import qualified Control.Applicative as CA -- for ZipList
+import qualified Control.Applicative as CA
 
 
 
@@ -140,63 +140,15 @@ parseDirectionSpecificStatement :: String -> (String, String, String)
 parseDirectionSpecificStatement statement = ((((words statement) !! 1)), (((words statement) !! 3)), (((words statement) !! 6)))
 
 
-
-{-
-data Person = Person Name PossibleCurrentLocations ListOfObjectsInHand NegatedLocations ListOfVisitedLocations deriving (Show)
-data Object = Object Name Owner PossibleCurrentLocations deriving (Show)
-data Location = Location Name East North West South PeopleInThisLocation ObjectsInThisLocation deriving (Show)
--}
-{-
-person1 = Person "Jack" ["garden", "library"] ["football", "flower"] [] []
-object1 = Object "football" "Jack" ["garden", "library"]
-object2 = Object "flower" "Jack" ["garden", "library"]
-object3 = Object "xbox" "Jill" ["garden"]
-location1 = Location "garden" "" "" "" "" ["Jack", "Jill"] ["football", "flower", "xbox"]
-location2 = Location "library" "" "" "" "" ["Jack"] ["football", "flower"]
-completeLocations = [location1, location2]
-
-person2 = Person "Jill" ["garden"] ["xbox"] [] []
--}
-
-
 removePersonFromLocation :: Person -> Location -> Location
 removePersonFromLocation person (Location name east north west south peopleInThisLocation objectsInThisLocation) = Location name east north west south (DL.delete (getPersonName person) peopleInThisLocation) objectsInThisLocation
-
-{-
-removePersonFromLocations :: Person -> PossibleCurrentLocations -> CompleteListOfLocations -> CompleteListOfLocations
-removePersonFromLocations person [] completeLocations = completeLocations
-removePersonFromLocations person (x:xs) completeLocations = let updatedLocation = removePersonFromLocation person x
-                                                                updatedCompleteLocations = DL.delete x completeLocations
-                                                            in  removePersonFromLocations person xs (updatedLocation : updatedCompleteLocations)
--}
-
-{-
--- For Testing removeTheseObjectsFromCompleteRecord function
-objectsToRemoveTest = ["football", "apple"]
-allObjectsTest = [(Object "table" "Jack" ["Home"]), (Object "flower" "Rose" ["Garden"]), (Object "football" "Messi" ["Field"])]
--}
 
 removeTheseObjectsFromCompleteRecord :: [String] -> CompleteListOfObjects -> CompleteListOfObjects
 removeTheseObjectsFromCompleteRecord objectsToRemove allObjects = filter (\object -> not $ elem (getObjectName object) objectsToRemove ) allObjects                                                        
 
-{-
--- For Testing createObject function
-nameTest = "table"
-ownerTest = "Jack"
-possibleNewLocationsTest = ["Home"]
--}
-
 createObject :: Name -> Owner -> PossibleCurrentLocations -> Object
 createObject name owner possibleCurrentLocations = Object name owner possibleCurrentLocations
 
-
--- For testing getZippedList function
-{-
-ownerTest = "Roger"
-objectsInHandTest = ["PS4", "XBOX ONE"]
-allObjectsTest = [(Object "table" "Jack" ["Home"]), (Object "flower" "Rose" ["Garden"]), (Object "football" "Messi" ["Field"])]
-getZippedListTest = CA.getZipList $ (,,) <$> CA.ZipList objectsInHandTest <*> CA.ZipList (repeat ownerTest) <*> CA.ZipList (repeat [])
--}
 
 updateLocationOfObjects :: String -> [String] -> ListOfObjectsInHand -> CompleteListOfObjects -> CompleteListOfObjects
 updateLocationOfObjects owner possibleNewLocations objectsInHand allObjects =
@@ -205,13 +157,6 @@ updateLocationOfObjects owner possibleNewLocations objectsInHand allObjects =
     in  foldl (\acc (oName, oOwner, oPossibleNewLocations) -> (createObject oName oOwner oPossibleNewLocations) : acc ) allObjectsAfterRemoval getZippedList
 
 
-
-{-                                                                              
--- For testing removePersonFromThisLocation function
-personNameTest = "Jack"
-locObjTest = Location "Field" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Abulo", "Jack", "Jill", "Tuna"] ["Football", "PS4", "XBOX ONE", "Cup", "Laptop"]
-objectsInHandTest = ["PS4", "XBOX ONE"]
--}
 
 removePersonFromThisLocation :: Name -> Location -> Location
 removePersonFromThisLocation personName locObj = 
@@ -222,17 +167,6 @@ removeObjectsFromThisLocation objectsInHand locObj =
     Location (getLocationName locObj) (getEastOfThisLocation locObj) (getNorthOfThisLocation locObj) (getWestOfThisLocation locObj) (getSouthOfThisLocation locObj) (getPeopleInThisLocation locObj) (foldl (\acc object -> DL.delete object acc) (getObjectsInThisLocation locObj) objectsInHand)
 
 
-
-{-
--- For testing removePersonAndHisObjectsFromLocation function
-personNameTest = "Jack"
-listOfObjectsInHandTest = ["Football", "Flower"]
-possibleCurrentLocationsTest = ["Field", "Home"]
-locationsTest = [  (Location "School" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Rose", "Eva", "Thor"]["Bucket", "Apple", "Hammer"])
-                 , (Location "Field" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Jack", "David"]["Football", "Flower", "Milk"])
-                 , (Location "Garden" "UnKnown" "UnKnown" "UnKnown" "UnKnown" []["Jar"])
-                 , (Location "Home" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Jack"]["Football", "Flower"])]
--}
 removePersonAndHisObjectsFromCurrentLocation :: Name -> ListOfObjectsInHand -> PossibleCurrentLocations -> CompleteListOfLocations -> CompleteListOfLocations
 removePersonAndHisObjectsFromCurrentLocation _ _ [] locations = locations
 removePersonAndHisObjectsFromCurrentLocation person listOfObjectsInHand (x:possibleCurrentLocations) locations = 
@@ -246,43 +180,17 @@ removePersonAndHisObjectsFromCurrentLocation person listOfObjectsInHand (x:possi
 
 
 
--- For testing addPersonInThisLocation function
-{-
-personName = "Jack"
-locObjTest = Location "Field" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Abulo", "Jill", "Tuna"] ["Football", "PS4", "XBOX ONE", "Cup", "Laptop"]
--}
 
 addPersonInThisLocation :: Name -> Location -> Location
 addPersonInThisLocation personName locObj =
     Location (getLocationName locObj) (getEastOfThisLocation locObj) (getNorthOfThisLocation locObj) (getWestOfThisLocation locObj) (getSouthOfThisLocation locObj) (personName : (getPeopleInThisLocation locObj)) (getObjectsInThisLocation locObj)                                            
 
 
--- For testing addObjectsInThisLocation function
-{-
-listOfObjectsInHandTest = ["Football", "Flower"]
-locObjTest = Location "Field" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Abulo", "Jill", "Tuna"] ["PS4", "XBOX ONE", "Cup", "Laptop"]
--}
 
 addObjectsInThisLocation :: [String] -> Location -> Location
 addObjectsInThisLocation objectsInHand locObj = 
     Location (getLocationName locObj) (getEastOfThisLocation locObj) (getNorthOfThisLocation locObj) (getWestOfThisLocation locObj) (getSouthOfThisLocation locObj) (getPeopleInThisLocation locObj) (foldl (\acc object -> object : acc) (getObjectsInThisLocation locObj) objectsInHand)
     
-
-
-
-
-
-
--- For testing addPersonAndHisObjectsInNewCurrentLocation function
-{-
-personNameTest = "Jack"
-listOfObjectsInHandTest = ["Football", "Flower"]
-possibleCurrentLocationsTest = ["Field", "Home"]
-locationsTest = [  (Location "School" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Rose", "Eva", "Thor"]["Bucket", "Apple", "Hammer"])
-                 , (Location "Garden" "UnKnown" "UnKnown" "UnKnown" "UnKnown" []["Jar"])
-                 , (Location "Home" "UnKnown" "UnKnown" "UnKnown" "UnKnown" [][])]
--}
-
 
 
 addPersonAndHisObjectsInNewCurrentLocation :: Name -> ListOfObjectsInHand -> PossibleCurrentLocations -> CompleteListOfLocations -> CompleteListOfLocations
@@ -297,17 +205,6 @@ addPersonAndHisObjectsInNewCurrentLocation person listOfObjectsInHand (x:newPoss
 
 
 
-
-
-
--- For testing updateCurrentLocationOfPerson function
-{-
-personObjTest = Person "Jack" ["Home"] ["PS4", "Laptop"] ["School", "Shop"] ["Home", "School"]
-newCurrentLocationsTest = ["Tampere"]
-newCurrentLocationsTest2 = ["Shop"]
--}
-
-
 updateCurrentLocationOfPerson :: Person -> PossibleCurrentLocations -> Person
 updateCurrentLocationOfPerson personObj newCurrentLocations = 
     let newVisitedLocations = if (length newCurrentLocations == 1) then
@@ -317,38 +214,9 @@ updateCurrentLocationOfPerson personObj newCurrentLocations =
     in Person (getPersonName personObj) newCurrentLocations (getListOfObjectsInHand personObj) (foldl (\acc newCurrLoc -> DL.delete newCurrLoc acc) (getNegatedLocations personObj) newCurrentLocations) newVisitedLocations
 
 
--- For testing updateRecords1 function
-
-{-
-peopleTest = [   (Person "Jack" ["Home"] ["Laptop", "Mobile", "Chocolate"] ["School"] ["Shop"])
-               , (Person "David" ["School"] ["Milk", "Banana", "Mouse"] ["Bedroom"] ["Home"])
-               , (Person "Irene" ["Theatre"] ["Plate", "Drink"] [] [])
-             ]
-
-objectsTest = [  (Object "Laptop" "Jack" ["Home"])
-               , (Object "Mobile" "Jack" ["Home"])
-               , (Object "Chocolate" "Jack" ["Home"])
-               , (Object "Milk" "David" ["School"])
-               , (Object "Banana" "David" ["School"])
-               , (Object "Mouse" "David" ["School"])
-               , (Object "Plate" "Irene" ["Theatre"])
-               , (Object "Drink" "Irene" ["Theatre"])
-              ]
-
-locationsTest = [  (Location "Home" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Jack"] ["Laptop", "Mobile", "Chocolate"])
-                 , (Location "School" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["David"] ["Milk", "Banana", "Mouse"])
-                 , (Location "Shop" "UnKnown" "UnKnown" "UnKnown" "UnKnown" [][])
-                 , (Location "Bedroom" "UnKnown" "UnKnown" "UnKnown" "UnKnown" [][])
-                 , (Location "Theatre" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Irene"]["Plate", "Drink"])
-                ]
-
-statementTest = "Jack moved to the garden"
--}
-
-
 getOrCreatePerson :: Maybe Person -> String -> Person
-getOrCreatePerson (Just x) personName = x   -- Person already exists in the list
-getOrCreatePerson Nothing personName = Person personName [] [] [] []  -- This person is new. He is not on the list
+getOrCreatePerson (Just x) personName = x  
+getOrCreatePerson Nothing personName = Person personName [] [] [] []  
 
 
 getOrCreateObject :: Name -> CompleteListOfObjects -> Object
@@ -374,23 +242,6 @@ updateRecords1 statement (people, objects, locations) =
         updatedObjects = updateLocationOfObjects (getPersonName personAfterCurrentLocationUpdate) (getPossibleCurrentLocationsOfPerson personAfterCurrentLocationUpdate) (getListOfObjectsInHand personAfterCurrentLocationUpdate) objects
         updatedPeople = personAfterCurrentLocationUpdate : (DL.delete personObject people)
 
-
-
-
-
-
-
-
-
--- For testing removeObjectFromLocation function
-{-
-locationsTest = [  (Location "Home" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Jack"] ["Laptop", "Mobile", "Chocolate"])
-                 , (Location "School" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["David"] ["Milk", "Banana", "Mouse"])
-                 , (Location "Shop" "UnKnown" "UnKnown" "UnKnown" "UnKnown" [][])
-                 , (Location "Bedroom" "UnKnown" "UnKnown" "UnKnown" "UnKnown" [][])
-                 , (Location "Theatre" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Irene"]["Plate", "Drink", "Milk"])
-                ]
--}
 
 removeObjectFromLocations :: Name -> PossibleCurrentLocations -> CompleteListOfLocations -> CompleteListOfLocations   
 removeObjectFromLocations _ [] locations = locations 
@@ -607,11 +458,6 @@ updateRecords7 statement completeRecord =
         directionLocationUpdate location1 directionFrom location2 completeRecord
         
 
-
-
-
-
-
 isItInTheQuestion :: String -> Bool
 isItInTheQuestion statement = (((words statement) !! 0) == "Is") && (((words statement) !! 2) == "in") && (((words statement) !! 3) == "the")
 
@@ -628,11 +474,7 @@ whereWasQuestion statement = DL.isPrefixOf "Where was" statement
 
 howDoYouGoQuestion :: String -> Bool
 howDoYouGoQuestion statement = DL.isPrefixOf "How do you go from" statement
-                
-
-
-
-
+       
 
 determineLocationPerson :: String -> PossibleCurrentLocations -> NegatedLocations -> String
 determineLocationPerson location [] [] = "maybe"
@@ -664,16 +506,6 @@ determineLocationObject :: [String] -> String
 determineLocationObject [] = "don't know"
 determineLocationObject [location] = location
 determineLocationObject _ = "don't know"
-
-
--- For testing findPerson function
-{-
-peopleTest = [   (Person "Jack" ["Home"] ["Laptop", "Mobile", "Chocolate"] ["School"] ["Shop"])
-               , (Person "David" ["School"] ["Milk", "Banana", "Mouse"] ["Bedroom"] ["Home"])
-               , (Person "Irene" ["Theatre"] ["Plate", "Drink"] [] [])
-               , (Person "May" [] ["Plate", "Drink"] ["School"] [])
-             ]
--}
 
 
 findPerson :: String -> String -> CompleteListOfPeople -> String
@@ -752,15 +584,6 @@ answerWhereWasQuestion personName beforeOrAfter location (people, objects, locat
     do
         let answer = findPastLocation personName beforeOrAfter location people
         putStrLn answer
-
-
-
-
-
-locationsTest = [  (Location "School" "Field" "UnKnown" "UnKnown" "UnKnown" ["Rose", "Eva", "Thor"]["Bucket", "Apple", "Hammer"])
-                 , (Location "Field" "UnKnown" "UnKnown" "School" "Garden" ["Jack", "David"]["Football", "Flower", "Milk"])
-                 , (Location "Garden" "UnKnown" "Field" "UnKnown" "UnKnown" []["Jar"])
-                 , (Location "Home" "UnKnown" "UnKnown" "UnKnown" "UnKnown" ["Jack"]["Football", "Flower"])]
 
 
 
