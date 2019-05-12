@@ -12,9 +12,11 @@ isGapSubStr :: String -> String -> Int -> Int -> String -> Bool
 isGapSubStr [] [] _ _ _ = True
 isGapSubStr xs [] _ _ _ = False
 isGapSubStr [] ys _ _ _ = True
+
 isGapSubStr (x:xs) (y:ys) 0 givenK wholeS1
     | x /= y = isGapSubStr wholeS1 (y:ys) givenK givenK wholeS1
     | otherwise = isGapSubStr xs ys givenK givenK wholeS1
+    
 isGapSubStr (x:xs) (y:ys) currentK givenK wholeS1
     | x == y = isGapSubStr xs ys givenK givenK wholeS1
     | otherwise = isGapSubStr (x:xs) ys (currentK-1) givenK wholeS1
