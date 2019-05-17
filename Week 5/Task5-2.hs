@@ -45,5 +45,5 @@ runCalculator stack = do
                             
 
 main = do
-            print "Please enter a valid polish notation one character at a time."
+            print "Please enter a valid polish notation one number/operator at a time."
             runCalculator []
