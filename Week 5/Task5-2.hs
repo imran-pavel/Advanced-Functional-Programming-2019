@@ -1,6 +1,6 @@
 {-|
 
-After loading run the main function. Then enter one character at a time of a valid reverse polish notation.
+After loading run the main function. Then enter one number/operator at a time of a valid reverse polish notation.
 For example, if you want to evaluate this notation: 10 4 3 + 2 * -
 After running main, type in 10 and hit enter, then 4 and so on.
 
