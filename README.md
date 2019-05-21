@@ -3,7 +3,7 @@
 # Topics covered:
 
     
-The **first week** is supposed to cover the basics of Haskell from http://learnyouahaskell.comhttp://learnyouahaskell.com  starting from the beginning and reaching to  pattern matching and guards (4. Syntax of Functions)
+The **first week** is supposed to cover the basics of Haskell from http://learnyouahaskell.com/ starting from the beginning and reaching to  pattern matching and guards (4. Syntax of Functions)
 
 The **second week** covered Learn you a Haskell until Modules.
 
