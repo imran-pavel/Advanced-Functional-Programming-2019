@@ -3,7 +3,7 @@
 # Topics covered:
 
     
-The **first week** is supposed to cover the basics of Haskell from http://learnyouahaskell.com/ starting from the beginning and reaching to  pattern matching and guards (4. Syntax of Functions)
+The **first week** is supposed to cover the basics of Haskell from [Learn You a Haskell for Great Good!](http://learnyouahaskell.com/) starting from the beginning and reaching to  pattern matching and guards (4. Syntax of Functions)
 
 The **second week** covered Learn you a Haskell until Modules.
 
@@ -13,7 +13,7 @@ The **fourth week** was about functors and IO.
 
 **Fifth week**: Exceptions, applicative functors, randomization, and reverse polish calculator example.
 
-**Sixth week**: Monads, until the Writer monad, Difflists, and basics of Quickchek : http://book.realworldhaskell.org/read/testing-and-quality-assurance.html
+**Sixth week**: Monads, until the Writer monad, Difflists, and [basics of Quickchek](http://book.realworldhaskell.org/read/testing-and-quality-assurance.html)
 
 **Seventh week**:
 - [Tail recursion](http://www.cs.bham.ac.uk/~vxs/teaching/Haskell/handouts/tail-recursion.pdf) (just the factorial example was covered in the lecture) : 
